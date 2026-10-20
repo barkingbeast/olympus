@@ -1,7 +1,7 @@
-import {logo,godArt,bossArt,templeArt,icons,bossPhase,realmArt,realmName} from './art.js?v=6';
-import {stages,quests,stats,shiftDay,dayNow,weekStart,sharedStreak,bossState,combatEvent,gameRewardsToday,weeklyScore} from './game.js?v=6';
-import {playBattle,openAnimationStudio,awakenGod} from './motion.js?v=6';
-import {gameList,gameCover,openMiniGame,stopMiniGame} from './minigames.js?v=6';
+import {logo,godArt,bossArt,templeArt,icons,bossPhase,realmArt,realmName} from './art.js?v=7';
+import {stages,quests,stats,shiftDay,dayNow,weekStart,sharedStreak,bossState,combatEvent,gameRewardsToday,weeklyScore} from './game.js?v=7';
+import {playBattle,openAnimationStudio,awakenGod} from './motion.js?v=7';
+import {gameList,gameCover,openMiniGame,stopMiniGame} from './minigames.js?v=7';
 import {getSession,storeSession,authenticate,rpc,signout,recover} from './api.js';
 const app=document.querySelector('#app'),modal=document.querySelector('#modal');let state,calendarMonth='',tab='home',demo=false,busy=false,authMode='login',chosenGod='zeus',timerEnd=0,timerHandle=0,notificationTimer=0,lastDay=dayNow();
 const incomingInvite=location.hash.match(/^#join=([a-f0-9]{32})$/);if(incomingInvite){try{localStorage.setItem('olympus.invite',incomingInvite[1])}catch{}}

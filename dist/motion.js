@@ -1,4 +1,4 @@
-import {godArt,bossArt,bossPhase,realmArt,realmName} from './art.js?v=6';
+import {godArt,bossArt,bossPhase,realmArt,realmName} from './art.js?v=7';
 
 // Visual effects only: game rewards and health are always supplied by saved state.
 const colors={zeus:'#e9c777',poseidon:'#8acdc4',hades:'#c394da'};

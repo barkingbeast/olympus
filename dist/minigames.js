@@ -35,9 +35,10 @@ export function openMiniGame({id,showModal,onStart,onClaim,rewarded=false,capped
  let raf=0,elapsed=0,finished=false,session=null,last=0;
  signal.addEventListener('abort',()=>cancelAnimationFrame(raf),{once:true});
  listen(dialog,'close',()=>controller.abort());
+ listen(document,'visibilitychange',()=>{last=0});
  const status=t=>{const el=root.querySelector('.game-status');if(el)el.textContent=t};
  function scene(body,controls=''){root.innerHTML=`<div class="game-hud"><span data-game-stage>GET READY</span><span data-game-clock>0s</span></div>${body}<p class="game-status" role="status"></p>${controls}`}
- function loop(tick){const frame=time=>{if(signal.aborted||finished)return;const dt=last?Math.min((time-last)/1000,.05):0;last=time;if(!document.hidden){elapsed+=dt;tick(dt,elapsed);const clock=root.querySelector('[data-game-clock]');if(clock)clock.textContent=Math.floor(elapsed)+'s'}raf=requestAnimationFrame(frame)};raf=requestAnimationFrame(frame)}
+ function loop(tick){const frame=time=>{if(signal.aborted||finished)return;const dt=last?Math.min((time-last)/1000,1):0;last=time;if(!document.hidden){elapsed+=dt;tick(dt,elapsed);const clock=root.querySelector('[data-game-clock]');if(clock)clock.textContent=Math.floor(elapsed)+'s'}raf=requestAnimationFrame(frame)};raf=requestAnimationFrame(frame)}
  function finish(){
   if(finished||signal.aborted)return;finished=true;cancelAnimationFrame(raf);root.classList.add('game-won');
   root.insertAdjacentHTML('beforeend',`<div class="game-result"><div class="win-laurel">✧</div><div class="eyebrow">A LITTLE VICTORY</div><h3>${id==='boulder'?'Summit reached.':id==='lantern'?'You found your way.':'The flock is safe.'}</h3><p>${rewarded||capped?'Beautifully done. This round was just for fun.':'Your adventure is complete. Claim your reward.'}</p>${!rewarded&&!capped?'<button class="btn primary full" data-game-claim>Claim +5 XP · +2 coins</button>':''}<button class="btn subtle full" data-game-again>Play again →</button><p class="tiny game-claim-status" role="status"></p></div>`);
@@ -74,7 +75,7 @@ export function openMiniGame({id,showModal,onStart,onClaim,rewarded=false,capped
   });
   loop((dt,t)=>{root.querySelector('[data-game-stage]').textContent=`PATH ${round+1} / 3`;
    if(waiting){pause+=dt;if(pause>1){if(round===2){if(t>=10)finish()}else{round++;show()}}return}
-   if(showing){reveal+=dt;tiles.forEach(el=>el.classList.remove('lit'));const i=Math.floor(reveal/.65);if(i<6){tiles[lanternPaths[round][i]].classList.add('lit');tiles[lanternPaths[round][i]].querySelector('small').textContent=String(i+1)}else{showing=false;tiles.forEach(el=>el.querySelector('small').textContent='');status('Your turn. Tap the six stones in order.')}}
+   if(showing){reveal+=Math.min(dt,.65);tiles.forEach(el=>el.classList.remove('lit'));const i=Math.floor(reveal/.65);if(i<6){tiles[lanternPaths[round][i]].classList.add('lit');tiles[lanternPaths[round][i]].querySelector('small').textContent=String(i+1)}else{showing=false;tiles.forEach(el=>el.querySelector('small').textContent='');status('Your turn. Tap the six stones in order.')}}
   });
  }
  function fleece(){
