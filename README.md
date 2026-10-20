@@ -1,5 +1,7 @@
 # OLYMPUS
 
+Live app: https://barkingbeast.github.io/olympus/
+
 A private, two-player daily challenge, built for iPhone Safari. Animated SVG gods and bosses, one-tap check-ins, duo streaks, a journey map, XP, coins, quests, temples, cosmetics, recovery, private reflections and a weekly scoreboard.
 
 ## Architecture
@@ -58,4 +60,4 @@ The reset timer uses an absolute end time, so it resumes after Safari suspends t
 
 ## Verification status
 
-JavaScript syntax and six game-rule tests pass. The private backend integration checks pass in a rolled-back transaction. Browser demo flows verified: daily check-in → day-five evolution, adventure map, temple purchase, chest, and profile/calendar. Final-domain email auth and actual iPhone Safari remain to be verified after deployment.
+JavaScript syntax and six game-rule tests pass. The private backend integration checks pass in a rolled-back transaction. Browser demo flows verified: daily check-in → day-five evolution, adventure map, temple purchase, chest, and profile/calendar. GitHub Pages deployment and the live app login screen are verified. Supabase Site URL and exact redirect allowlist are configured for the live domain. Full email confirmation/recovery with a real user and actual iPhone Safari remain to be verified.
