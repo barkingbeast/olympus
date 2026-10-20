@@ -44,13 +44,16 @@ No installation is required. Run `npm run dev` for a local preview at http://loc
 
 ## Reward rules
 
-- Every day can have exactly one check-in, editable that day. Any check-in earns 10 XP and 20 coins; success earns another 40 XP.
-- Each daily quest earns 25 XP and 10 coins once. Check-in corrections never multiply coins.
-- Missing today preserves yesterday's streak until today's window closes. A logged slip resets the current streak immediately. Past XP and purchases remain.
-- A success deals 75 boss damage, a quest 15, and both allies succeeding on the same date adds 50. Boss HP is 1,200, with a different animated enemy each week.
-- Day 3: Spartan. Day 5: Greek God. Day 7: Olympian. Day 14: Titan. Day 21: God of Thunder. Day 30: Cosmic Deity.
-- The first five successful days unlock the golden-laurel chest. Cosmetic coins have no monetary value.
-- Temple stages cost 100, 200 and 300 coins; server enforces prerequisites and available balance.
+- New successful daily check-ins earn **100 XP and 30 coins**. A fresh-start check-in earns 10 XP and 5 coins. Same-day edits change the existing entry and never create another reward.
+- Boulder Roll, Hades’ Lantern, and Golden Fleece each earn **5 XP and 2 coins**, once per game per day, with at most **two rewarded games daily** (10 XP / 4 coins total). Replays are free and reward-free.
+- Server-issued game tokens, a minimum 10-second round, a 30-minute claim expiry, unique activity keys, and the existing player row lock enforce the reward limits. Game outcomes run in the browser; these are casual self-accountability games, not competitive proof of skill.
+- Existing activities without `payload.economy=2` retain their original rewards: check-in 10 XP +40 XP for success / 20 coins; old quest 25 XP / 10 coins. Historical rows, purchases, notes, duos and profiles are not rewritten. Existing same-day entries keep their original economy when corrected.
+- Reset and ally-support utilities remain available, with no new XP/coin rewards. Retired exercise quests cannot be claimed by old clients.
+- Check-ins deal 75 boss damage, rewarded games 5, and both allies succeeding on the same day add 50. Historical quests retain 15 damage. Boss HP stays 1,200.
+- Week and day boundaries use Asia/Kolkata. Game rewards reset at midnight. Started rounds do not cross the daily boundary.
+- Temple and cosmetic prices are unchanged. Purchase validation uses the same legacy-aware coin formula as the client.
+
+`backend/arcade_rewards.sql` is the non-destructive upgrade applied after the base schema. `backend/verify_arcade.sql` verifies tokens, duplicates, caps, rewards, purchases, and player isolation in a rolled-back transaction.
 
 ## iPhone usage
 

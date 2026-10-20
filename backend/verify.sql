@@ -10,8 +10,8 @@ begin
  perform public.olympus_action('checkin','{"status":"success"}');
  select count(*) into n from olympus_private.activities where user_id=a and kind='checkin';
  if n<>1 then raise exception 'Duplicate check-in reward'; end if;
- perform public.olympus_action('quest','{"item":"walk"}');
- perform public.olympus_action('quest','{"item":"walk"}');
+ perform public.olympus_action('quest','{"item":"breathe"}');
+ perform public.olympus_action('quest','{"item":"breathe"}');
  select count(*) into n from olympus_private.activities where user_id=a and kind='quest';
  if n<>1 then raise exception 'Duplicate quest reward'; end if;
  perform public.olympus_action('note','{"body":"Secret A reflection"}');
@@ -34,7 +34,7 @@ begin
  exception when others then if sqlerrm<>'Build the columns first' then raise;end if;end;
  begin
   perform public.olympus_action('purchase','{"item":"aura"}');raise exception 'Expected balance rejection';
- exception when others then if sqlerrm<>'Complete more quests to earn coins' then raise;end if;end;
+ exception when others then if sqlerrm<>'Keep checking in to earn coins' then raise;end if;end;
  perform public.olympus_action('checkin','{"status":"slip"}');
  s:=public.olympus_action('state');
  if not exists(select 1 from jsonb_array_elements(s->'activities') x where x->>'kind'='checkin' and x->'payload'->>'status'='slip') then raise exception 'Correction not saved';end if;

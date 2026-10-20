@@ -1,4 +1,4 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import {stats,sharedStreak,bossState,combatEvent,shiftDay,weekStart} from '../dist/game.js';
+import {test} from 'node:test';import assert from 'node:assert/strict';import {stats,sharedStreak,bossState,combatEvent,shiftDay,weekStart,activityReward,weeklyScore,gameRewardsToday} from '../dist/game.js';
 import {bossPhase,bossArt} from '../dist/art.js';
 const today='2026-10-20';const entry=(day,status='success',id='a')=>({user_id:id,day,kind:'checkin',item:'',payload:{status}});
 test('unlogged today preserves yesterday streak; missing full day breaks it',()=>{assert.equal(stats([entry('2026-10-18'),entry('2026-10-19')],'a',today).current,2);assert.equal(stats([entry('2026-10-18')],'a',today).current,0)});
@@ -32,4 +32,24 @@ test('visual boss phase changes at half health and preserves supplied progress',
   assert.match(bossArt(i,true),/class="boss-awakened"/);
   assert.doesNotMatch(bossArt(i),/class="boss-awakened"/);
  }
+});
+
+
+test('new daily challenge dominates games while old earnings keep original values',()=>{
+ const modern={...entry(today),payload:{status:'success',economy:2}};
+ const game=id=>({user_id:'a',day:today,kind:'game',item:id,payload:{economy:2}});
+ assert.deepEqual(activityReward(modern),{xp:100,coins:30});
+ assert.deepEqual(activityReward(entry(today)),{xp:50,coins:20});
+ const activities=[entry('2026-10-19'),modern,game('boulder'),game('lantern')];
+ const s=stats(activities,'a',today);assert.equal(s.xp,160);assert.equal(s.earned,54);
+ assert.equal(gameRewardsToday({activities,me:'a',today}),2);assert.equal(weeklyScore(activities,'a',today),160);
+});
+test('corrections, utility actions, and pending game runs cannot mint rewards',()=>{
+ assert.deepEqual(activityReward({...entry(today,'slip'),payload:{status:'slip',economy:2}}),{xp:10,coins:5});
+ for(const kind of ['game_run','quest','support'])assert.deepEqual(activityReward({kind,payload:{economy:2}}),{xp:0,coins:0});
+ assert.deepEqual(activityReward({kind:'quest',payload:{}}),{xp:25,coins:10});
+});
+test('new games add only a small boss strike and unfinished runs add none',()=>{
+ const state={today,profiles:[{id:'a'}],activities:[{...entry(today),payload:{status:'success',economy:2}},{user_id:'a',day:today,kind:'game',item:'boulder',payload:{economy:2}},{user_id:'a',day:today,kind:'game_run',item:'lantern',payload:{}}]};
+ assert.equal(bossState(state).damage,80);
 });
