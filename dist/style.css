@@ -35,3 +35,32 @@
 .reduced .battle-beam,.reduced .battle-sparks,.reduced .battle-damage{display:none}.reduced .anim-death{opacity:.3}.reduced .anim-revive{opacity:1}
 @media(prefers-reduced-motion:reduce){.battle-beam,.battle-sparks{display:none}.anim-death{opacity:.3}.anim-revive{opacity:1}}
 @media(max-width:420px){.battle-stage{height:210px}.motion-actor{height:190px}.motion-buttons .btn{font-size:10px}}
+
+/* Streak landscapes and phase effects are presentation only. */
+body[data-realm="1"] .ambient{background:radial-gradient(ellipse at 85% 0,#c5a36020,transparent 65%)}
+body[data-realm="2"] .ambient{background:radial-gradient(ellipse at 85% 0,#6cb7a025,transparent 65%)}
+body[data-realm="3"] .ambient,body[data-realm="4"] .ambient{background:radial-gradient(ellipse at 85% 0,#9192d329,transparent 65%)}
+body[data-realm="5"] .ambient,body[data-realm="6"] .ambient{background:radial-gradient(ellipse at 85% 0,#ba91df2c,transparent 60%),radial-gradient(ellipse at 10% 70%,#e9c77712,transparent 60%)}
+.realm-art{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:#b9c69c;z-index:0}
+.realm-1>.realm-art{color:#dbc18a}.realm-2>.realm-art{color:#92d1b4}.realm-3>.realm-art,.realm-4>.realm-art{color:#b4bce7}.realm-5>.realm-art,.realm-6>.realm-art{color:#d4b5f3}
+.hero>.realm-art{opacity:.85;animation:realm-reveal 1.4s ease-out both}.hero-top,.hero-main{position:relative;z-index:1}
+.hero-main{position:static}.hero-top{z-index:2}.hero-copy{position:relative}.hero-copy h2{margin:12px 0}
+.hero-art.god-interactive{border:0;background:none;padding:0;color:var(--accent);pointer-events:auto;cursor:pointer;display:block;z-index:1;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.god-touch{display:block;width:100%;height:100%;transform-origin:50% 85%}.god-name{font:inherit;letter-spacing:inherit;line-height:inherit;text-align:left;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.god-name:active{color:var(--gold)}.realm-caption{position:absolute;bottom:66px;left:24px;font-size:9px;letter-spacing:1px;color:var(--muted);z-index:1;pointer-events:none}
+.god-tap-ring{position:absolute;width:64%;height:64%;left:18%;top:15%;border:1px solid var(--accent);border-radius:50%;opacity:0;pointer-events:none}
+.tap-awake .god-touch{animation:god-greeting 1.15s cubic-bezier(.22,.7,.28,1) both}.tap-awake .float{animation:none}.tap-awake .weapon{animation:weapon-salute 1.15s ease-in-out both}.tap-awake .god-tap-ring{animation:tap-ring 1.15s ease-out both}.tap-awake .particles circle{animation:tap-spark 1.15s ease-out both}
+.realm-stars{animation:realm-twinkle 6s ease-in-out infinite}.realm-mist{animation:realm-drift 12s ease-in-out infinite}.realm-orbit{transform-origin:430px 92px;animation:realm-orbit 18s ease-in-out infinite}
+.phase-badge{display:inline-block;color:#f3c38e;font-size:8px;letter-spacing:.7px;margin:2px 0 5px}.boss-phase-awakened{background:radial-gradient(ellipse at 85% 45%,#c77e3d27,transparent 70%),#19251b;border-color:#e5a46f40}.boss-phase-awakened .boss-art{filter:drop-shadow(0 0 10px #d99b5b44)}
+.boss-awakened .eye{stroke:#ffd9a6;stroke-width:5;filter:drop-shadow(0 0 4px #f4a661)}.rage-aura{transform-origin:150px 120px;animation:rage-pulse 3s ease-in-out infinite}.rage-embers{animation:rage-embers 2.5s ease-in-out infinite}
+.anim-transform{animation:boss-transform 1.5s cubic-bezier(.2,.8,.3,1) both}.anim-transform .float,.anim-transform .bosshead{animation:none}
+@keyframes god-greeting{0%,100%{transform:translateY(0) rotate(0) scale(1)}25%{transform:translateY(-8px) rotate(-4deg) scale(1.025)}55%{transform:translateY(-15px) rotate(3deg) scale(1.055)}80%{transform:translateY(-4px) rotate(-1deg)}}
+@keyframes tap-ring{0%{opacity:0;transform:scale(.5)}30%{opacity:.7}100%{opacity:0;transform:scale(1.4)}}
+@keyframes tap-spark{0%,100%{opacity:.4}40%{opacity:1;transform:translateY(-9px)}}
+@keyframes realm-reveal{from{opacity:0;transform:scale(1.04)}to{opacity:.85;transform:scale(1)}}
+@keyframes realm-twinkle{50%{opacity:.15}}@keyframes realm-drift{50%{transform:translateX(12px)}}@keyframes realm-orbit{50%{transform:rotate(8deg)}}
+@keyframes rage-pulse{50%{opacity:.55;transform:scale(.96)}}@keyframes rage-embers{50%{opacity:.3;transform:translateY(-10px)}}
+@keyframes boss-transform{0%{transform:scale(1);opacity:1}20%{transform:scale(.88) rotate(-5deg);opacity:.4}40%{transform:scale(1.14) rotate(4deg);filter:brightness(2)}65%{transform:scale(1.04) rotate(-2deg)}100%{transform:scale(1);filter:brightness(1)}}
+.reduced .tap-awake .god-touch{outline:1px solid var(--accent);outline-offset:-25px;border-radius:50%}
+@media(max-width:760px){.realm-caption{left:20px;bottom:64px;font-size:8px}.hero-art.god-interactive{top:35px}}
+@media(prefers-reduced-motion:reduce){.tap-awake .god-touch{outline:1px solid var(--accent);outline-offset:-25px;border-radius:50%}}
