@@ -1,0 +1,10 @@
+const URL='https://viiapqmlvebglaugrtzj.supabase.co';const KEY='sb_publishable_6gjK6RNj9hVlcOkXOPU5qg_nfz_McTH';
+const SESSION='olympus.session.v1';let session;try{session=JSON.parse(localStorage.getItem(SESSION)||'null')}catch{session=null}
+export const getSession=()=>session;let refreshing;
+export function storeSession(s){session=s;try{if(s)localStorage.setItem(SESSION,JSON.stringify(s));else localStorage.removeItem(SESSION)}catch{throw new Error('Safari storage is unavailable. Enable website storage to stay signed in.')}}
+async function request(path,body,token){let res;try{res=await fetch(URL+path,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify(body)})}catch{throw new Error('Could not connect. Check your internet and try again. Your check-in has not been saved.')}let data=await res.json();if(!res.ok)throw new Error(data.msg||data.message||data.error_description||data.error||'Something went wrong');return data}
+export async function authenticate(email,password,signup=false){const data=await request(signup?'/auth/v1/signup?redirect_to='+encodeURIComponent(location.origin+location.pathname):'/auth/v1/token?grant_type=password',{email,password});if(data.access_token){data.expires_at=Date.now()+data.expires_in*1000;storeSession(data)}return data}
+export async function refresh(){if(!session)return;if(session.expires_at>Date.now()+60000)return;if(!refreshing)refreshing=(async()=>{try{const d=await request('/auth/v1/token?grant_type=refresh_token',{refresh_token:session.refresh_token});d.expires_at=Date.now()+d.expires_in*1000;storeSession(d)}finally{refreshing=null}})();return refreshing}
+export async function rpc(op,p={}){await refresh();if(!session)throw new Error('Please sign in again');return request('/rest/v1/rpc/olympus_action',{op,p},session.access_token)}
+export async function signout(){if(session){try{await request('/auth/v1/logout',{},session.access_token)}catch{}}storeSession(null)}
+export async function recover(email){return request('/auth/v1/recover?redirect_to='+encodeURIComponent(location.origin+location.pathname),{email})}
