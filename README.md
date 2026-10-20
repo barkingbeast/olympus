@@ -86,3 +86,9 @@ The repo is prepared for local use; it cannot be automatically placed into a des
 Saved check-ins and quests that increase weekly boss damage play a skippable battle sequence: god attack, divine beam, boss hit, and HP decrease. Crossing zero HP triggers a boss fall/dissolve followed by a god victory pose. Repeated check-ins without new damage do not replay attacks. Reduced-motion users skip these sequences.
 
 Open **Profile → Preview animations**, or **Battle details → Preview battle animations**, to try god attack, hit, fall/revival, victory and ascension, plus boss hit, death and revival, without changing any progress.
+
+## Living sanctuary and weekly cards
+
+- The sanctuary derives its flock and entrance lantern from your own saved, rewarded Golden Fleece and Hades’ Lantern completions. It requires no new database state. Empty sanctuaries include a clearly labeled visual preview.
+- Tapping the avatar or rank triggers Zeus lightning, Poseidon waves, or Hades’ portal. Reduced-motion settings give a brief static effect instead.
+- Profile → View weekly recap opens a name-free card with the current streak, shared weekly boss damage, duo combos and team check-ins. The 1080 × 1350 PNG is generated on the device, with a Safari file-share button and a download fallback. Demo cards are watermarked. No private notes, invite codes or challenge definitions are included.

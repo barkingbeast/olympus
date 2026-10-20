@@ -27,3 +27,8 @@ export function combatEvent(before,after){
  if(!before||!after||before.week!==after.week||after.damage<=before.damage)return null;
  return {damage:after.damage-before.damage,combo:after.comboDays>before.comboDays,defeated:before.damage<after.max&&after.damage>=after.max};
 }
+
+export function sanctuaryProgress(state){
+ const wins=state.activities.filter(a=>a.user_id===state.me&&a.kind==='game'&&a.day<=state.today);
+ return{sheep:Math.min(5,wins.filter(a=>a.item==='fleece').length*3),lantern:wins.some(a=>a.item==='lantern')};
+}

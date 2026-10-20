@@ -1,4 +1,4 @@
-import {godArt,bossArt,bossPhase,realmArt,realmName} from './art.js?v=7';
+import {godArt,bossArt,bossPhase,realmArt,realmName} from './art.js?v=8';
 
 // Visual effects only: game rewards and health are always supplied by saved state.
 const colors={zeus:'#e9c777',poseidon:'#8acdc4',hades:'#c394da'};
@@ -10,11 +10,12 @@ const limited=()=>document.body.classList.contains('reduced')||matchMedia('(pref
 function particles(){return `<div class="battle-sparks" aria-hidden="true">${Array.from({length:16},(_,i)=>`<i style="--sx:${Math.cos(i*Math.PI/8)*100}px;--sy:${Math.sin(i*Math.PI/8)*85}px;--sd:${i%4*35}ms"></i>`).join('')}</div>`}
 function animate(actor,kind){if(!actor)return;for(const x of Object.keys(labels))actor.classList.remove('anim-'+x);void actor.offsetWidth;actor.classList.add('anim-'+kind);}
 function artStage(god,stage,index,awakened=false){return `<div class="battle-stage realm-${stage}" style="--battle-color:${colors[god]||colors.zeus}">${realmArt(stage)}<div class="battle-floor"></div><div class="motion-actor battle-god">${godArt(god,stage)}</div><div class="battle-beam" aria-hidden="true"></div><div class="motion-actor battle-enemy">${bossArt(index,awakened)}</div><div class="battle-impact" aria-hidden="true">${particles()}</div></div>`}
+const tapTimers=new WeakMap();
 export function awakenGod(actor){
  if(!actor)return;
+ clearTimeout(tapTimers.get(actor));
  actor.classList.remove('tap-awake');void actor.offsetWidth;actor.classList.add('tap-awake');
- if(limited()){setTimeout(()=>actor.classList.remove('tap-awake'),400);return}
- actor.onanimationend=e=>{if(e.animationName==='god-greeting'){actor.classList.remove('tap-awake');actor.onanimationend=null}};
+ tapTimers.set(actor,setTimeout(()=>{actor.classList.remove('tap-awake');tapTimers.delete(actor)},limited()?400:1700));
 }
 export async function playBattle({god,stage,before,after,damage,combo,defeated,name,showModal,closeModal}){
  if(limited())return;
