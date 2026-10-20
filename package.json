@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "check": "node --check dist/app.js && node --check dist/api.js && node --check dist/art.js && node --check dist/game.js && node --check dist/motion.js && node --check dist/minigames.js",
+    "check": "node --check dist/app.js && node --check dist/api.js && node --check dist/art.js && node --check dist/game.js && node --check dist/motion.js && node --check dist/minigames.js && node --check dist/recap.js",
     "dev": "node scripts/dev.mjs"
   },
   "engines": {
