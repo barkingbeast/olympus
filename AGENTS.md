@@ -15,6 +15,7 @@ Requires Node.js 22+ and Git. No npm install is needed: this project has no pack
 
 - `dist/app.js`: UI, forms, auth callbacks and game interactions.
 - `dist/game.js`: pure streak, XP, progression, date and boss calculations.
+- `dist/motion.js`: SVG battle timelines and a progress-free animation studio.
 - `dist/art.js`: animated SVG avatars, bosses, temple and icons.
 - `dist/style.css`: responsive styles and animations.
 - `dist/api.js`: Supabase REST authentication/session refresh and game RPC.

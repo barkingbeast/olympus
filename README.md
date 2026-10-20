@@ -60,7 +60,7 @@ The reset timer uses an absolute end time, so it resumes after Safari suspends t
 
 ## Verification status
 
-JavaScript syntax and six game-rule tests pass. The private backend integration checks pass in a rolled-back transaction. Browser demo flows verified: daily check-in → day-five evolution, adventure map, temple purchase, chest, and profile/calendar. GitHub Pages deployment and the live app login screen are verified. Supabase Site URL and exact redirect allowlist are configured for the live domain. Full email confirmation/recovery with a real user and actual iPhone Safari remain to be verified.
+JavaScript syntax and eight game-rule tests pass. The private backend integration checks pass in a rolled-back transaction. Browser demo flows verified: daily check-in → day-five evolution, adventure map, temple purchase, chest, and profile/calendar. GitHub Pages deployment and the live app login screen are verified. Supabase Site URL and exact redirect allowlist are configured for the live domain. Full email confirmation/recovery with a real user and actual iPhone Safari remain to be verified.
 
 ## Edit with Codex on your Windows laptop
 
@@ -77,3 +77,9 @@ npm run dev
 4. Ask Codex to commit and push when ready. Every push to `main` automatically redeploys GitHub Pages.
 
 The repo is prepared for local use; it cannot be automatically placed into a desktop app or filesystem on a laptop that this session cannot access. The chat history does not have to transfer: the repository contains the architecture and continuation instructions.
+
+## SVG combat animations
+
+Saved check-ins and quests that increase weekly boss damage play a skippable battle sequence: god attack, divine beam, boss hit, and HP decrease. Crossing zero HP triggers a boss fall/dissolve followed by a god victory pose. Repeated check-ins without new damage do not replay attacks. Reduced-motion users skip these sequences.
+
+Open **Profile → Preview animations**, or **Battle details → Preview battle animations**, to try god attack, hit, fall/revival, victory and ascension, plus boss hit, death and revival, without changing any progress.
